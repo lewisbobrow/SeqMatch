@@ -1,0 +1,56 @@
+/**********************************************************
+* Proj1Wk2
+* Comp 15 Spring 2019 
+* README
+* Author: Lewis Bobrow
+*
+*********************************************************/
+
+Compile/run: Compile using "make", run executable using "./SeqMatch [query
+file] [location]". I compiled the unittest file, TestMain.cpp, separately
+using clang++.
+
+Program Purpose: The purpose of this program is to read in a DNA sequence
+from a query file, and to check if a sequence is one that has already been 
+catalogued, or something new. The program also checks if there is a partial
+match in the library of stored sequences. This is accomplished by 
+implementing a trie, a type of tree that efficiently manages a dictionary by 
+storing strings with common prefixes along the same path. The results of the 
+trie operations from the query file are printed to an output file.
+
+Acknowledgements: I discussed the project with Brendan Brennan, and used
+geeksforgeeks.org and stackoverflow.com as resources.
+
+Files: 
+main.cpp: creates an instance of a trie, reads in the query and output files
+from the command line arguments, and runs the commands from the query file.
+
+Trie.cpp: Implementation of Trie class.
+
+Trie.h: Interface of Trie class.
+
+TestMain.cpp: Unit testing of the Trie class. Creates an 
+instance of a binary search tree and tests the functionality of the functions.
+
+Data Structures: The trie has several advantages; it allows us to insert and search in 
+linear time O(n) (where n is the length of a word), it allows us to do prefix 
+searches, and it allows us to print words alphabetically (www.geeksforgeeks.org/
+advantages-trie-data-structure). These advantages are ideal for a dictionary of DNA 
+sequences where many operations involve searching, inserting and printing. The trie 
+consists of a trieNode, which contains a char (representing A, C, G or T), a bool  
+end_of_word, which is true only if a sequence in the trie ends with that node, and an 
+array of children, that can contain pointers to up to 4 nodes (A, C, G or T).
+
+Testing: I had many, many segmentation faults while writing this program. Many of them 
+revolved around my decision to put all my infile/outfile getcommand operations into 
+its own function. Without passing an outfile into each function (such as query, 
+prefixquery etc.), I had to make each of these functions return something that could 
+be written into an outfile, such as a string. This presented a problem, specifically 
+for print and printPrefixQuery, as I had to get all the words in the trie into a 
+string separated by endline characters. After finally getting the code to run without 
+seg faulting, I tested lots of different inputs in my query file, then used the 
+reference queryfile to make sure that it had the same output as the reference 
+implementation. After this I created a TestMain.cpp where I created an instance of the 
+trie, and tested base and edge cases of the functions. I made all the functions public 
+for testing in TestMain.cpp, then I made them private again once I was done testing, 
+and commented out TestMain.cpp (it would no longer work).
